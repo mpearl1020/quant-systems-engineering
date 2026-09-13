@@ -33,6 +33,52 @@ add_executable(market_replay
     src/main.cpp
 )
 
+# Experiments
+add_executable(object_layout
+    experiments/object_layout.cpp
+)
+
+target_link_libraries(object_layout
+    PRIVATE
+    market_replay_lib
+)
+
+add_executable(vector_growth
+    experiments/vector_growth.cpp
+)
+
+target_link_libraries(vector_growth
+    PRIVATE
+    market_replay_lib
+)
+
+add_executable(vector_reserve
+    experiments/vector_reserve.cpp
+)
+
+target_link_libraries(vector_reserve
+    PRIVATE
+    market_replay_lib
+)
+
+add_executable(copy_vs_reference
+    experiments/copy_vs_reference.cpp
+)
+
+target_link_libraries(copy_vs_reference
+    PRIVATE
+    market_replay_lib
+)
+
+add_executable(assembly_demo
+    experiments/assembly_demo.cpp
+)
+
+target_link_libraries(assembly_demo
+    PRIVATE
+    market_replay_lib
+)
+
 target_link_libraries(market_replay
     PRIVATE
         market_replay_lib
