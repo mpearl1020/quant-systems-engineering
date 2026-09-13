@@ -5,6 +5,8 @@
 #include "market_replay/market_event.hpp"
 
 void printMarketEventSizes() {
+  std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MarketEvent Struct "
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
   std::size_t marketEventStructSize{sizeof(market_replay::MarketEvent)};
 
   std::size_t timestampMemberSize{
@@ -35,6 +37,8 @@ void printMarketEventSizes() {
 }
 
 void printSideStatsSizes() {
+  std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SideStats Struct "
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
   std::size_t sideStatstructSize{sizeof(market_replay::SideStats)};
 
   std::size_t countMemberSize{sizeof(market_replay::SideStats::count)};
@@ -73,6 +77,8 @@ void printSideStatsSizes() {
 }
 
 void printTickerStatsSizes() {
+  std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TickerStats Struct "
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
   std::size_t tickerStatsStructSize{sizeof(market_replay::TickerStats)};
 
   std::size_t buyStatsMemberSize{sizeof(market_replay::TickerStats::buyStats)};
@@ -95,6 +101,32 @@ void printTickerStatsSizes() {
             << " bytes\n";
 }
 
+void printMarketEventAddresses() {
+  std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MarketEvent Addresses "
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+  const market_replay::MarketEvent sampleMarketEvent{
+      1000000004, "AAPL", market_replay::Side::Buy, 430.16, 4890};
+
+  std::cout << "MarketEvent addres: " << &sampleMarketEvent << '\n';
+  std::cout << "\ttimestamp member value: " << sampleMarketEvent.timestamp
+            << "\n\ttimestamp member address: " << &sampleMarketEvent.timestamp
+            << "\n\n";
+  std::cout << "\tsymbol member value: " << sampleMarketEvent.symbol
+            << "\n\tsymbol member address: " << &sampleMarketEvent.symbol
+            << "\n\n";
+  std::cout << "\tside member value: "
+            << (sampleMarketEvent.side == market_replay::Side::Buy ? "Buy"
+                                                                   : "Sell")
+            << "\n\tside member address: " << &sampleMarketEvent.side << "\n\n";
+  std::cout << "\tprice member value: " << sampleMarketEvent.price
+            << "\n\tprice member address: " << &sampleMarketEvent.price
+            << "\n\n";
+  std::cout << "\tquantity member value: " << sampleMarketEvent.quantity
+            << "\n\tquantity member address: " << &sampleMarketEvent.quantity
+            << "\n";
+}
+
 int main() {
   printMarketEventSizes();
   std::cout << '\n';
@@ -103,6 +135,9 @@ int main() {
   std::cout << '\n';
 
   printTickerStatsSizes();
+  std::cout << '\n';
+
+  printMarketEventAddresses();
 
   return 0;
 }
