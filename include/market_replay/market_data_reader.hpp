@@ -10,7 +10,7 @@
 
 namespace market_replay {
 
-std::vector<MarketEvent> readMarketDataFromCSV(const std::string& csvPath);
+std::vector<MarketEvent> read_market_data_from_csv(const std::string& csv_path);
 
 }  // namespace market_replay
 

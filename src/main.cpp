@@ -12,43 +12,43 @@
 
 int main() {
   std::cout << "Enter a market data file path: ";
-  std::string csvPath;
-  std::getline(std::cin, csvPath);
+  std::string csv_path;
+  std::getline(std::cin, csv_path);
 
   std::cout << "Reading market data file...\n";
 
-  auto readStartTime = std::chrono::steady_clock::now();
-  std::vector<market_replay::MarketEvent> marketEvents =
-      market_replay::readMarketDataFromCSV(csvPath);
-  auto readEndTime = std::chrono::steady_clock::now();
-  auto elpasedReadTime = readEndTime - readStartTime;
+  auto read_start_time = std::chrono::steady_clock::now();
+  std::vector<market_replay::MarketEvent> market_events =
+      market_replay::read_market_data_from_csv(csv_path);
+  auto read_end_time = std::chrono::steady_clock::now();
+  auto elapsed_read_time = read_end_time - read_start_time;
 
-  size_t numMarketEvents = marketEvents.size();
-  double readTime = std::chrono::duration<double>(elpasedReadTime).count();
-  std::cout << "Read and saved " << numMarketEvents << " marketEvents in "
-            << readTime << " seconds\n";
+  size_t num_market_events = market_events.size();
+  double read_time = std::chrono::duration<double>(elapsed_read_time).count();
+  std::cout << "Read and saved " << num_market_events << " marketEvents in "
+            << read_time << " seconds\n";
 
   while (true) {
     std::cout << "\nChoose a menu option\n\t1. Replay market events\n\t2. "
                  "Compute statistics\n\t3. Exit\n";
 
-    int menuOption;
-    while (!(std::cin >> menuOption) ||
-           (menuOption != 1 && menuOption != 2 && menuOption != 3)) {
+    int menu_option;
+    while (!(std::cin >> menu_option) ||
+           (menu_option != 1 && menu_option != 2 && menu_option != 3)) {
       std::cout << "Invalid input. Please enter a valid menu option (1, 2, 3) ";
 
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    if (menuOption == 1) {
-      market_replay::replayMarketEvents(marketEvents);
-    } else if (menuOption == 2) {
+    if (menu_option == 1) {
+      market_replay::replay_market_events(market_events);
+    } else if (menu_option == 2) {
       const std::unordered_map<std::string, market_replay::TickerStats>
-          marketStatistics =
-              market_replay::computeMarketDataStatistics(marketEvents);
-      market_replay::printMarketStatistics(marketStatistics);
-    } else if (menuOption == 3) {
+          market_statistics =
+              market_replay::compute_market_data_statistics(market_events);
+      market_replay::print_market_statistics(market_statistics);
+    } else if (menu_option == 3) {
       std::cout << "Exiting...\n";
       break;
     }

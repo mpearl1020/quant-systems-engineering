@@ -21,17 +21,17 @@ struct MarketEvent {
 
 struct SideStats {
   uint64_t count{};
-  double priceSum{};
-  double minPrice{std::numeric_limits<double>::infinity()};
-  double maxPrice{};
-  uint64_t volumeSum{};
-  uint32_t minVolume{std::numeric_limits<uint32_t>::max()};
-  uint32_t maxVolume{};
+  double price_sum{};
+  double min_price{std::numeric_limits<double>::infinity()};
+  double max_price{};
+  uint64_t volume_sum{};
+  uint32_t min_volume{std::numeric_limits<uint32_t>::max()};
+  uint32_t max_volume{};
 };
 
 struct TickerStats {
-  SideStats buyStats{};
-  SideStats sellStats{};
+  SideStats buy_stats{};
+  SideStats sell_stats{};
 };
 
 }  // namespace market_replay

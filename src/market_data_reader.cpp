@@ -10,69 +10,70 @@
 
 namespace market_replay {
 
-constexpr size_t kTimestampIdx = 0;
-constexpr size_t kSymbolIdx = 1;
-constexpr size_t kSideIdx = 2;
-constexpr size_t kPriceIdx = 3;
-constexpr size_t kQuantityIdx = 4;
+constexpr size_t k_timestamp_idx = 0;
+constexpr size_t k_symbol_idx = 1;
+constexpr size_t k_side_idx = 2;
+constexpr size_t k_price_idx = 3;
+constexpr size_t k_quantity_idx = 4;
 
-std::vector<MarketEvent> readMarketDataFromCSV(const std::string& csvPath) {
-  std::ifstream marketDataFile{csvPath};
+std::vector<MarketEvent> read_market_data_from_csv(
+    const std::string& csv_path) {
+  std::ifstream market_data_file{csv_path};
 
-  if (!marketDataFile) {
+  if (!market_data_file) {
     std::cerr << "issue opening file\n";
     return {};
   }
 
-  std::vector<MarketEvent> marketEvents;
-  std::string dataLine;
+  std::vector<MarketEvent> market_events;
+  std::string data_line;
 
-  std::getline(marketDataFile, dataLine);  // discard CSV header
+  std::getline(market_data_file, data_line);  // discard CSV header
 
-  size_t csvLineNumber = 1;
+  size_t csv_line_number = 1;
 
-  while (std::getline(marketDataFile, dataLine)) {
-    ++csvLineNumber;
-    std::vector<std::string> lineElements =
-        dataLine | std::views::split(',') |
+  while (std::getline(market_data_file, data_line)) {
+    ++csv_line_number;
+    std::vector<std::string> line_elements =
+        data_line | std::views::split(',') |
         std::ranges::to<std::vector<std::string>>();
 
-    if (lineElements.size() != 5) {
-      std::cout << "[WARNING] Skipping CSV row " << csvLineNumber
+    if (line_elements.size() != 5) {
+      std::cout << "[WARNING] Skipping CSV row " << csv_line_number
                 << " that doesn't contain 5 elements\n";
       continue;
     }
 
-    MarketEvent marketEvent{};
+    MarketEvent market_event{};
     try {
-      marketEvent.timestamp = std::stoull(lineElements[kTimestampIdx]);
-      marketEvent.symbol = lineElements[kSymbolIdx];
+      market_event.timestamp = std::stoull(line_elements[k_timestamp_idx]);
+      market_event.symbol = line_elements[k_symbol_idx];
 
-      if (lineElements[kSideIdx] == "BUY") {
-        marketEvent.side = Side::Buy;
-      } else if (lineElements[kSideIdx] == "SELL") {
-        marketEvent.side = Side::Sell;
+      if (line_elements[k_side_idx] == "BUY") {
+        market_event.side = Side::Buy;
+      } else if (line_elements[k_side_idx] == "SELL") {
+        market_event.side = Side::Sell;
       } else {
-        std::cout << "[WARNING] Skipping CSV row " << csvLineNumber
+        std::cout << "[WARNING] Skipping CSV row " << csv_line_number
                   << ". Transaction side must be in {BUY, SELL}, got "
-                  << lineElements[kSideIdx] << '\n';
+                  << line_elements[k_side_idx] << '\n';
         continue;
       }
 
-      marketEvent.price = std::stod(lineElements[kPriceIdx]);
-      marketEvent.quantity = std::stoul(lineElements[kQuantityIdx]);
+      market_event.price = std::stod(line_elements[k_price_idx]);
+      market_event.quantity = std::stoul(line_elements[k_quantity_idx]);
     } catch (const std::exception& e) {
       std::cout << "[WARNING] Parsing skipped due to malformed CSV data on row "
-                << csvLineNumber
+                << csv_line_number
                 << ". See exception message for more details: " << e.what()
                 << '\n';
       continue;
     }
 
-    marketEvents.push_back(marketEvent);
+    market_events.push_back(market_event);
   }
 
-  return marketEvents;
+  return market_events;
 }
 
-}
+}  // namespace market_replay

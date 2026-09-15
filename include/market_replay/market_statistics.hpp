@@ -10,11 +10,11 @@
 #include "market_replay/market_event.hpp"
 
 namespace market_replay {
-std::unordered_map<std::string, TickerStats> computeMarketDataStatistics(
-    const std::vector<MarketEvent>& marketEvents);
+std::unordered_map<std::string, TickerStats> compute_market_data_statistics(
+    const std::vector<MarketEvent>& market_events);
 
-void printMarketStatistics(
-    const std::unordered_map<std::string, TickerStats>& marketStatistics);
+void print_market_statistics(
+    const std::unordered_map<std::string, TickerStats>& market_statistics);
 }  // namespace market_replay
 
 #endif  // MARKET_REPLAY_MARKET_STATISTICS_HPP_
